@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Стек с мусоркой</title>
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<div class="controls">
+  <button onclick="pushStack()">Push</button>
+  <button onclick="popStack()">Pop</button>
+</div>
+
+<a href="index.html" class="back-button">Назад в меню</a>
+
+<a-scene shadow="type: pcfsoft" fog="type: exponential; color: #555; density: 0.02">
+
+  <a-assets>
+    <img id="portalTexture" src="assets/models/portal-rick-and-morty.gif">
+    <img id="floorTexture" src="assets/models/floor.jpg">
+    <img id="wallTexture" src="assets/models/gladkaa-belaa-kirpicnaa-stena.jpg">
+
+    <a-asset-item id="model2" src="assets/models/Box_2.glb"></a-asset-item>
+    <a-asset-item id="model3" src="assets/models/Box_3.glb"></a-asset-item>
+    <a-asset-item id="model4" src="assets/models/Box_4.glb"></a-asset-item>
+    <a-asset-item id="model5" src="assets/models/Box_5.glb"></a-asset-item>
+    <a-asset-item id="storageShelf" src="assets/models/Storage Shelf.glb"></a-asset-item>
+    <a-asset-item id="shelves" src="assets/models/Shelves.glb"></a-asset-item>
+    <a-asset-item id="box2" src="assets/models/Cardboard Boxes.glb"></a-asset-item>
+    <a-asset-item id="bottles" src="assets/models/Bottles.glb"></a-asset-item>
+    <a-asset-item id="vines" src="assets/models/Vines.glb"></a-asset-item>
+
+    <!-- Твоя мусорка -->
+  </a-assets>
+
+  <a-sky color="#1a1a1a"></a-sky>
+
+  <a-entity position="0 3 6">
+    <a-camera wasd-controls-enabled="false" look-controls="true"></a-camera>
+  </a-entity>
+  <a-entity gltf-model="#storageShelf" position="-4 0 0" scale="3 3 3" rotation="0 90 0" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#shelves" position="-1 0 -9" scale="3 3 3" rotation="0 -90 0" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model2" position="0 1 -9" scale="1 1 1"  shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model2" position="1.4 2.9 -9" scale="0.9 0.9 0.9"  shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model2" position="1.4 4.1 -9" scale="0.5 0.5 0.5"  shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#box2" position="-3 0 -4" scale="1.5 1.5 1.5" rotation="0 75 0"  shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-4 2.5 -1" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-4 0 9" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-4 1 9" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-4 0 7" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#vines" position="3 5 9.8" scale="4 4 4" rotation="0 180 0"  shadow="cast: true"></a-entity>
+
+  <a-entity gltf-model="#bottles" position="-2.5 0 9" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-2.5 1 9" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-2.5 2 9" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
+
+
+
+  <a-entity gltf-model="#model3" position="-4 1 1" scale="8 8 8"  shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model3" position="4 0 -9" scale="8 8 8"  shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model3" position="-2 3 -9" scale="7 7 7"  shadow="cast: true"></a-entity>
+
+  <a-entity gltf-model="#model4" position="3 0 -9" scale="4 3 3"  shadow="cast: true"></a-entity>
+
+
+  <a-entity gltf-model="#model5" position="1.4 1 -9" scale="1.5 1.5 1.5"  shadow="cast: true"></a-entity>
+
+  <a-plane
+          position="3 0.05 0"
+          width="2.3"
+          height="2.3"
+          rotation="-90 0 0"
+          src="#portalTexture"
+          material="transparent: true; alphaTest: 0.5"
+          shadow="receive: true"
+          animation="property: rotation; to: -90 0 360; dur: 4000; loop: true; easing: linear">
+    >
+  </a-plane>
+
+  <a-plane rotation="-90 0 0" width="10" height="20" src="#floorTexture" repeat="6 6" shadow="receive: true" ></a-plane> <!-- Пол -->
+
+  <a-plane position="0 5 -10" rotation="0 0 0" width="10" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane> <!-- Задняя стена -->
+
+  <a-plane position="0 5 10" rotation="0 180 0" width="10" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane> <!-- Передняя стена -->
+
+  <a-plane position="5 5 0" rotation="0 -90 0" width="20" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane> <!-- Правая стена -->
+
+  <a-plane position="-5 5 0" rotation="0 90 0" width="20" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane> <!-- Левая стена -->
+
+  <a-plane position="0 10 0" rotation="-90 0 0" width="10" height="20" color="#555" shadow="receive: true" side="double" src="#wallTexture"></a-plane>
+
+
+
+
+
+
+
+  <a-light type="directional" position="0 5 5" intensity="0.8" shadow="cast: true"></a-light>
+  <a-light type="ambient" intensity="0.5"></a-light>
+  <a-light type="point" position="3 5 3" intensity="0.5" color="#FFD580"></a-light>
+
+
+
+  <a-entity id="stack"></a-entity>
+
+</a-scene>
+
+<script src="js/stack.js"></script>
+</body>
+</html>

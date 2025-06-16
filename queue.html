@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Очередь: овцы в загоне</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script defer src="js/queue.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { margin: 0; overflow: hidden; }
+        #controls {
+            position: absolute; top: 10px; left: 10px; z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+<div id="controls">
+    <button id="enqueueBtn">Добавить овцу</button>
+    <button id="dequeueBtn">Выпустить овцу</button>
+</div>
+<a href="index.html" class="back-button">Назад в меню</a>
+
+
+<a-scene>
+    <a-assets>
+        <a-asset-item id="sheepModel" src="assets/models/sheep.glb"></a-asset-item>
+        <a-asset-item id="barn" src="assets/models/Barn.glb"></a-asset-item>
+        <a-asset-item id="fence" src="assets/models/Fence.glb"></a-asset-item>
+        <a-asset-item id="silo" src="assets/models/Silo.glb"></a-asset-item>
+        <a-asset-item id="house" src="assets/models/House.glb"></a-asset-item>
+        <a-asset-item id="haystack" src="assets/models/Haystack.glb"></a-asset-item>
+        <img id="grass" src="assets/models/Cartoon_green_texture_grass.jpg">
+        <img id="sky" src="assets/models/sky.jpg">
+
+    </a-assets>
+
+
+    <a-entity light="type: ambient; color: #ffffff; intensity: 0.8"></a-entity>
+    <a-entity light="type: directional; color: #ffffff; intensity: 1" position="5 10 5"></a-entity>
+    <a-plane rotation="-90 0 0" width="50" height="20" color="#77bb55" src="#grass" material="repeat: 10 10; side: double;shader: standard"></a-plane>
+    <a-plane rotation="-90 0 0" width="50" height="20" color="#77bb55" src="#grass" material="repeat: 10 10; side: double;shader: standard"></a-plane>
+    <a-plane rotation="-90 0 0" position="-50 0 -20" width="100" height="100" color="#77bb55" src="#grass" material="repeat: 10 10; side: double;shader: standard"></a-plane>
+    <a-plane rotation="-90 0 0" position="50 0 -20" width="100" height="100" color="#77bb55" src="#grass" material="repeat: 10 10; side: double;shader: standard"></a-plane>
+    <a-entity id="queueContainer" position="0 0 -10"></a-entity>
+    <a-entity camera position="0 10 20" look-controls="enabled: false"></a-entity>
+    <a-entity gltf-model="#barn" position="0 0 -44" scale="9 7 9"  shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#fence" position="-23 0 -8" scale="3 3 3" rotation="0 90 0" shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#fence" position="-23 0 12" scale="3 3 3" rotation="0 90 0" shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#fence" position="23 0 -8" scale="3 3 3" rotation="0 90 0" shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#fence" position="23 0 9" scale="3 3 3" rotation="0 90 0" shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#silo" position="-50 0 -15" scale="4 4 4" rotation="0 0 0" shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#silo" position="-50 0 -30" scale="4 4 4" rotation="0 0 0" shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#silo" position="-50 0 -48" scale="4 4 4" rotation="0 0 0" shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#silo" position="50 0 -10" scale="4 4 4" rotation="0 0 0" shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#house" position="55 0 -48" scale="30 30 30" rotation="0 -57 0" shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#haystack" position="55 0 -30" scale="1 1 1" rotation="0 0 0" shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#haystack" position="57 0 -23" scale="1 1 1" rotation="0 0 0" shadow="cast: true"></a-entity>
+    <a-entity id="crowdContainer" position="0 0 0"></a-entity>
+
+
+
+
+
+
+    <a-plane src="#sky" width="500" height="200" position="0 0 -80" rotation="0 0 0" shadow="cast: true"  material="repeat: 1 2; side: double;shader: standard">
+    </a-plane>
+
+</a-scene>
+
+</body>
+</html>
