@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Hash Table</title>
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script defer src="js/hash.js"></script>
+  <style>
+    body { margin: 0; overflow: hidden; }
+    #controls {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      gap: 20px;
+    }
+    input, button {
+      font-size: 20px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="controls">
+  <input type="number" id="valueInput" placeholder="Введите число">
+  <button id="insertBtn">Добавить</button>
+</div>
+
+<a-scene>
+  <a-assets></a-assets>
+
+  <a-entity light="type: ambient; color: #ffffff; intensity: 0.8"></a-entity>
+  <a-entity light="type: directional; color: #ffffff; intensity: 1" position="5 10 5"></a-entity>
+  <a-plane rotation="-90 0 0" width="50" height="50" color="#e0e0e0"></a-plane>
+
+  <!-- Контейнер для ячеек таблицы -->
+  <a-entity id="tableContainer"></a-entity>
+
+  <!-- Контейнер для вставляемых элементов -->
+  <a-entity id="hashContainer"></a-entity>
+
+  <a-entity camera position="0 20 30" look-controls="enabled: false"></a-entity>
+</a-scene>
+
+</body>
+</html>

@@ -8,5 +8,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="aframe-extras" level="application" />
+    <orderEntry type="library" name="aframe-line-component" level="application" />
+    <orderEntry type="library" name="aframe-look-at-component" level="application" />
   </component>
 </module>

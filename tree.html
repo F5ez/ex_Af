@@ -5,6 +5,7 @@
     <title>3D Binary Tree</title>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script defer src="js/tree.js"></script>
+
     <style>
         body { margin: 0; overflow: hidden; }
         #controls {
@@ -30,14 +31,56 @@
 </div>
 
 <a-scene>
-    <a-assets></a-assets>
+    <a-assets>
+        <img id="space" src="assets/models/space.jpg">
+        <img id="ligh" src="assets/models/lightning.png">
+        <a-asset-item id="bh" src="assets/models/black_hole.glb"></a-asset-item>
+        <a-asset-item id="planet" src="assets/models/Planet.glb"></a-asset-item>
+        <a-asset-item id="aster" src="assets/models/Asteroid.glb"></a-asset-item>
+    </a-assets>
 
+    <!-- Задник -->
+    <a-sky src="#space"></a-sky>
+
+    <!-- Освещение -->
     <a-entity light="type: ambient; color: #ffffff; intensity: 0.8"></a-entity>
     <a-entity light="type: directional; color: #ffffff; intensity: 1" position="5 10 5"></a-entity>
-    <a-plane rotation="-90 0 0" width="100" height="100" color="#aaffaa"></a-plane>
 
+    <!-- Площадка -->
+
+    <!-- Черная дыра
+ -->
+    <a-entity
+            gltf-model="#bh"
+            position="-250 10 -150"
+            scale="1 1 1"
+            rotation="0 55 0"
+            shadow="cast: true"
+            animation="property: rotation; to: 0 415 0; dur: 20000; loop: true; easing: linear">
+    </a-entity>
+    <a-entity
+            gltf-model="#planet"
+            position="340 10 -150"
+            scale="0.2 0.2 0.2"
+            rotation="0 0 0"
+            shadow="cast: true"
+            animation="property: rotation; to: 0 360 0; dur: 50000; loop: true; easing: linear">
+    </a-entity>
+    <a-entity gltf-model="#aster" position="-270 120 -200" scale="2 2 2" rotation="0 0 0"  shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#aster" position="-280 140 -200" scale="2 2 2" rotation="0 0 90"  shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#aster" position="-230 100 -250" scale="2 2 2" rotation="0 68 0"  shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#aster" position="-300 100 -200" scale="2 2 2" rotation="90 0 0"  shadow="cast: true"></a-entity>
+
+    <a-entity gltf-model="#aster" position="300 100 -200" scale="2 2 2" rotation="90 0 0"  shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#aster" position="265 170 -200" scale="2 2 2" rotation="0 90 0"  shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#aster" position="280 130 -200" scale="2 2 2" rotation="90 0 90"  shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#aster" position="250 150 -200" scale="2 2 2" rotation="90 0 45"  shadow="cast: true"></a-entity>
+
+
+    <!-- Сюда рисуется дерево -->
     <a-entity id="treeContainer"></a-entity>
 
+    <!-- Камера -->
     <a-entity camera position="0 25 50" look-controls="enabled: false"></a-entity>
 </a-scene>
 
