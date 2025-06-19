@@ -255,25 +255,29 @@ a-scene {
     width: 800px;
     box-sizing: border-box;
 
+
 }
 
 .rick_form_block label {
-    display: block;
+    display: flex;
+    justify-content: space-between;
 }
 
 .rick_form_block select,
 .rick_form_block input[type="checkbox"] {
     margin-top: 8px;
-    padding: 6px 10px;
+    padding: 5px 10px;
     font-size: 18px;
     font-family: inherit;
     border: 2px solid #ccc;
     border-radius: 5px;
 }
-
+.rick_form_block input[type="checkbox"]{
+    transform: scale(3);
+}
 .rick_form_block button {
     padding: 10px 20px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     background-color: #0077ff;
     color: white;
