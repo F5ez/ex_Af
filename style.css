@@ -20,6 +20,7 @@ h1 {
 }
 
 .menu {
+
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -119,5 +120,163 @@ a-scene {
     background-color: #777;
 }
 
+
+
+
+/* рик*/
+
+.assistant_wrap{
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 9999;
+
+
+}
+.assistant_wrap_text{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    position: fixed;
+    top: 0;
+    width: 800px;
+    height: 100vh;
+    background-color: white;
+    border-right: 4px solid #888;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    margin-left: -800px;
+    z-index: 9999;
+
+}
+.as_img{
+    width: 100px;
+    height: 100px;
+    display: flex;
+}
+.assistant_wrap:hover{
+    background-color: #e4e4e4;
+}
+.img_rick_arr{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-basis: 100%;
+    height: 400px;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+.as_img img{
+    width: auto;
+    height: auto;
+    rotate: -90deg;
+}
+.as_rick_img{
+    width: 400px;
+    height: 400px;
+}
+.as_rick_img img{
+    width: 400px;
+    height: 400px;
+}
+.rick_arr{
+    display: flex;
+    width: 200px;
+    height: 400px;
+    justify-content: center;
+    align-items: center;
+}
+.rick_arr img{
+    rotate: -90deg;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+
+}
+.rick_arr_count{
+    color:black;
+    flex-basis: 100%;
+    height: 100px;
+}
+.rick_arr{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+.rick_arr_count{
+    text-align: center;
+    align-content: center;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.as_rick_text{
+    overflow: auto;
+    height: 50vh;
+    display: flex;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+    color: black;
+}
+/* Плавное смещение колонок */
+.assistant_wrap,
+.assistant_wrap_text {
+    transition: margin-left 0.45s ease;
+}
+
+/* Плавный поворот стрелки */
+.as_img {
+    transition: transform 0.45s ease;
+}
+.rick_form_block {
+    font-size: 24px;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px;
+    margin-top: 20px;
+    width: 800px;
+    box-sizing: border-box;
+
+}
+
+.rick_form_block label {
+    display: block;
+}
+
+.rick_form_block select,
+.rick_form_block input[type="checkbox"] {
+    margin-top: 8px;
+    padding: 6px 10px;
+    font-size: 18px;
+    font-family: inherit;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+.rick_form_block button {
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #0077ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.rick_form_block button:hover {
+    background-color: #005fcc;
+}
 
 

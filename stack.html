@@ -5,9 +5,28 @@
   <title>3D Стек с мусоркой</title>
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
   <link rel="stylesheet" href="style.css">
+  <script src="js/rick_assistant.js"></script>
+
 </head>
 <body>
 
+<div class="assistant_wrap">
+  <div class="as_img">
+    <img id="menu" src="/assets/models/free-icon-arrow-down-3353104.png" alt="">
+  </div>
+</div>
+<div class="assistant_wrap_text">
+  <div class="img_rick_arr">
+    <div class="as_rick_img">
+      <img src="assets/rick/rick_smile.png" alt="">
+    </div>
+    <div class="rick_arr">
+      <img src="assets/models/free-icon-down-arrow-8001417.png" id="menu_text" alt="">
+      <div class="rick_arr_count">1\1</div>
+    </div>
+  </div>
+  <div class="as_rick_text"></div>
+</div>
 
 <div class="controls">
   <button onclick="pushStack()">Push</button>
