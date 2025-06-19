@@ -6,15 +6,48 @@
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script defer src="js/queue.js"></script>
     <link rel="stylesheet" href="style.css">
+
+    </script>
+    <script>
+        window.rickTextIndex = [
+            "Овцы? Да ну их! Этот \"беее, беее\" – это не про очередь, а про скуку и бессмысленное жевание. Мы не тут, чтобы считать овец, мы тут — чтобы понять, как всё движется по порядку, а не скачет вразнобой.",
+            "Эти странные анимации очереди — будто Рик в запое пытается упорядочить Джерри и Морти. Все встают в линию, но кто-то постоянно пытается лезть без очереди. Такой беспредел Рик терпеть не станет!",
+            "Очередь — это как межгалактическая столовая: кто встал первым — тот и получил порцию первым. FIFO — First In, First Out. Никаких хитростей и обманов, только порядок и дисциплина. Вот так работает настоящая очередь!.",
+        ];
+    </script>
+    <script src="js/rick_assistant.js"></script>
+
     <style>
         body { margin: 0; overflow: hidden; }
         #controls {
             position: absolute; top: 10px; left: 10px; z-index: 10;
         }
     </style>
+
 </head>
 <body>
+<div class="assistant_wrap">
+    <div class="as_img">
+        <img id="menu" src="/assets/models/free-icon-arrow-down-3353104.png" alt="">
+    </div>
+</div>
+<div class="assistant_wrap_text">
+    <div class="img_rick_arr">
+        <div class="as_rick_img">
+            <img src="assets/rick/rick_smile.png" alt="">
+        </div>
+        <div class="rick_arr">
+            <img src="assets/models/free-icon-down-arrow-8001417.png" id="menu_text" alt="">
+            <div class="rick_arr_count">1\1</div>
+        </div>
+    </div>
+    <div class="as_rick_text"></div>
+</div>
 
+<div class="controls">
+    <button onclick="pushStack()">Push</button>
+    <button onclick="popStack()">Pop</button>
+</div>
 <div id="controls">
     <button id="enqueueBtn">Добавить овцу</button>
     <button id="dequeueBtn">Выпустить овцу</button>

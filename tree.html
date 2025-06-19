@@ -5,9 +5,62 @@
     <title>3D Binary Tree</title>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script defer src="js/tree.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        window.rickTextIndex = [
+            "Чувак, а почему это дерево выглядит, как будто его рисовал сумасшедший из мультивселенной? Тут всё вверх тормашками, ветки вразнобой — как у меня в голове после вечеринки с Морти! В мультивселенной такое норм, тут может быть что угодно — даже дерево, которое больше на космический лабиринт похоже. Не паникуй, Рик с тобой, сейчас разберёмся, что к чему",
+            "Дерево — это такая структура, где каждый узел может иметь потомков. Представь семью Морти: папа, мама, дети — все связаны, но строго по правилам. Здесь порядок иерархии важнее, чем в любых порталах Рика.",
+            "Ладно, дружище, давай по-честному. Дерево — это такая штука, где каждый узел — это число, скажем от 1 до 9999. Каждый узел может иметь максимум двух потомков: одного слева и одного справа. Левый потомок — это число меньше текущего узла, правый — больше. Так дерево быстро находит нужное число — словно портал в нужную точку мультивселенной. Запомни: чем глубже ныряешь, тем больше вероятности встретить сумасшедших веток",
+            "Здесь у нас всего три ветки — удобно, чтобы не запутаться в лабиринте мультивселенной. Запомни, кнопки  — строго по центру снизу, чтобы не терять время. А если захочешь свалить из этой психушки — выскакивай по кнопке выхода справа вверх. Быстро и без лишних телепортов!"
 
+        ];
+    </script>
+    <script src="js/rick_assistant.js"></script>
     <style>
         body { margin: 0; overflow: hidden; }
+        #controls {
+            position: fixed;
+            top:80%;
+            margin-left: 40px;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            align-items: center;
+        }
+
+        #valueInput {
+            width: 200px;
+            padding: 10px 15px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1.5px solid #ccc;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        #valueInput:focus {
+            border-color: #0077ff;
+        }
+
+        #insertBtn {
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 8px;
+            background-color: #0077ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #insertBtn:hover {
+            background-color: #005fcc;
+        }
+
         #controls {
             position: fixed;
             bottom: 30px;
@@ -37,6 +90,23 @@
     </style>
 </head>
 <body>
+<div class="assistant_wrap">
+    <div class="as_img">
+        <img id="menu" src="/assets/models/free-icon-arrow-down-3353104.png" alt="">
+    </div>
+</div>
+<div class="assistant_wrap_text">
+    <div class="img_rick_arr">
+        <div class="as_rick_img">
+            <img src="assets/rick/rick_smile.png" alt="">
+        </div>
+        <div class="rick_arr">
+            <img src="assets/models/free-icon-down-arrow-8001417.png" id="menu_text" alt="">
+            <div class="rick_arr_count">1\1</div>
+        </div>
+    </div>
+    <div class="as_rick_text"></div>
+</div>
 <a href="index.html" class="back-button">Назад в меню</a>
 
 <div id="controls">

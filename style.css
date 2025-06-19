@@ -145,6 +145,7 @@ a-scene {
     align-content: flex-start;
     position: fixed;
     top: 0;
+    padding-left: 4px;
     width: 800px;
     height: 100vh;
     background-color: white;
@@ -279,4 +280,6 @@ a-scene {
     background-color: #005fcc;
 }
 
+#valueInput{
 
+}
