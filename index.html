@@ -3,51 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>3D Визуализация Структур Данных</title>
+    <!-- Подключение внешних стилей -->
     <link rel="stylesheet" href="style.css">
 </head>
+
+<!-- Скрипт помощника Рика на главной -->
 <script src="js/rick_general.js"></script>
+
 <body>
+
+<!-- Заголовок страницы -->
 <h1>3D Визуализация Структур Данных</h1>
 
-
+<!-- Обёртка для кнопки помощника -->
 <div class="assistant_wrap">
-
     <div class="as_img">
+        <!-- Кнопка вызова меню -->
         <img id="menu" src="assets/models/free-icon-arrow-down-3353104.png" alt="">
     </div>
 </div>
+
+<!-- Область с изображением и текстом Рика -->
 <div class="assistant_wrap_text">
     <div class="img_rick_arr">
-    <div class="as_rick_img">
-        <img src="assets/rick/rick_smile.png" alt="">
-    </div>
+        <div class="as_rick_img">
+            <!-- Изображение Рика -->
+            <img src="assets/rick/rick_smile.png" alt="">
+        </div>
         <div class="rick_arr">
+            <!-- Стрелка под текст и счётчик -->
             <img src="assets/models/free-icon-down-arrow-8001417.png" id="menu_text" alt="">
             <div class="rick_arr_count">
                 1\4
             </div>
         </div>
     </div>
+    <!-- Текст, выводимый помощником -->
     <div class="as_rick_text">
-
     </div>
 </div>
 
+<!-- Предзагрузка страниц в iframe (скрытые) -->
+<iframe src="tree.html" style="display:none;"></iframe>
+<iframe src="queue.html" style="display:none;"></iframe>
+<iframe src="hash.html" style="display:none;"></iframe>
+
+<!-- Меню с навигацией по визуализациям -->
 <div class="menu">
     <a href="stack.html" class="menu-button">Стек</a>
     <a href="queue.html" class="menu-button">Очередь </a>
     <a href="tree.html" class="menu-button">Дерево </a>
     <a href="hash.html" class="menu-button">Хэш</a>
-    
 </div>
 
-    <img id="rick_png_1" src="assets/models/rick_menu.png" alt="">
-    <img id="rick_png_2" src="assets/models/morty.png" alt="">
+<!-- Изображения персонажей -->
+<img id="rick_png_1" src="assets/models/rick_menu.png" alt="">
+<img id="rick_png_2" src="assets/models/morty.png" alt="">
 
 </body>
 </html>
-
-
-
-
-

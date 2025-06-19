@@ -2,53 +2,69 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>3D Стек с мусоркой</title>
+  <title>Stack</title>
+  <!-- Подключение A-Frame -->
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <!-- Подключение внешнего CSS -->
   <link rel="stylesheet" href="style.css">
   <script>
+    // Массив текстов для отображения помощником Риком
     window.rickTextIndex = [
       "Стек — это такая труктура, где последнее добавленное — первое, что достаёшь. LIFO — Last In, First Out. Просто, как прыжок в портал",
       "Представь, что Рик бухает, и каждый новый стакан кладёт сверху. Первый, кто нальёт — тот и пьёт последний. Вот так стек рулит: последний пришёл — первый ушёл. Если Джерри попробует достать снизу — фиаско, братан!",
       "Кнопки навигации — в левом верхнем углу, чтобы ты мог глянуть, что дальше. Если захочешь свалить отсюда — жми на большую красную кнопку(ха-ха у нас все еще банальнее) в правом верхнем. Просто, как выключатель портала.",
     ];
   </script>
+  <!-- Подключение скрипта помощника -->
   <script src="js/rick_assistant.js"></script>
 
 </head>
 <body>
 
+<!-- Обёртка блока с изображением стрелки -->
 <div class="assistant_wrap">
   <div class="as_img">
+    <!-- Кнопка открытия текста -->
     <img id="menu" src="/assets/models/free-icon-arrow-down-3353104.png" alt="">
   </div>
 </div>
+
+<!-- Обёртка блока с текстом и изображением Рика -->
 <div class="assistant_wrap_text">
   <div class="img_rick_arr">
     <div class="as_rick_img">
+      <!-- Изображение Рика -->
       <img src="assets/rick/rick_smile.png" alt="">
     </div>
     <div class="rick_arr">
+      <!-- Стрелка и счётчик -->
       <img src="assets/models/free-icon-down-arrow-8001417.png" id="menu_text" alt="">
       <div class="rick_arr_count">1\1</div>
     </div>
   </div>
+  <!-- Текстовая часть -->
   <div class="as_rick_text"></div>
 </div>
 
+<!-- Кнопки для работы со стеком -->
 <div class="controls">
   <button onclick="pushStack()">Push</button>
   <button onclick="popStack()">Pop</button>
 </div>
 
+<!-- Кнопка возврата на главный экран -->
 <a href="index.html" class="back-button">Назад в меню</a>
 
+<!-- Сцена A-Frame -->
 <a-scene shadow="type: pcfsoft" fog="type: exponential; color: #555; density: 0.02">
 
+  <!-- Предзагрузка ассетов -->
   <a-assets>
     <img id="portalTexture" src="assets/models/portal-rick-and-morty.gif">
     <img id="floorTexture" src="assets/models/floor.jpg">
     <img id="wallTexture" src="assets/models/gladkaa-belaa-kirpicnaa-stena.jpg">
 
+    <!-- 3D модели -->
     <a-asset-item id="model2" src="assets/models/Box_2.glb"></a-asset-item>
     <a-asset-item id="model3" src="assets/models/Box_3.glb"></a-asset-item>
     <a-asset-item id="model4" src="assets/models/Box_4.glb"></a-asset-item>
@@ -62,38 +78,36 @@
     <!-- Твоя мусорка -->
   </a-assets>
 
+  <!-- Небо -->
   <a-sky color="#1a1a1a"></a-sky>
 
+  <!-- Камера -->
   <a-entity position="0 3 6">
     <a-camera wasd-controls-enabled="false" look-controls="true"></a-camera>
   </a-entity>
+
+  <!-- Расставленные объекты -->
   <a-entity gltf-model="#storageShelf" position="-4 0 0" scale="3 3 3" rotation="0 90 0" shadow="cast: true"></a-entity>
   <a-entity gltf-model="#shelves" position="-1 0 -9" scale="3 3 3" rotation="0 -90 0" shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#model2" position="0 1 -9" scale="1 1 1"  shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#model2" position="1.4 2.9 -9" scale="0.9 0.9 0.9"  shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#model2" position="1.4 4.1 -9" scale="0.5 0.5 0.5"  shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#box2" position="-3 0 -4" scale="1.5 1.5 1.5" rotation="0 75 0"  shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#bottles" position="-4 2.5 -1" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#bottles" position="-4 0 9" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#bottles" position="-4 1 9" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#bottles" position="-4 0 7" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#vines" position="3 5 9.8" scale="4 4 4" rotation="0 180 0"  shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model2" position="0 1 -9" scale="1 1 1" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model2" position="1.4 2.9 -9" scale="0.9 0.9 0.9" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model2" position="1.4 4.1 -9" scale="0.5 0.5 0.5" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#box2" position="-3 0 -4" scale="1.5 1.5 1.5" rotation="0 75 0" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-4 2.5 -1" scale="1.5 1.5 1.5" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-4 0 9" scale="1.5 1.5 1.5" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-4 1 9" scale="1.5 1.5 1.5" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-4 0 7" scale="1.5 1.5 1.5" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#vines" position="3 5 9.8" scale="4 4 4" rotation="0 180 0" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-2.5 0 9" scale="1.5 1.5 1.5" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-2.5 1 9" scale="1.5 1.5 1.5" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#bottles" position="-2.5 2 9" scale="1.5 1.5 1.5" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model3" position="-4 1 1" scale="8 8 8" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model3" position="4 0 -9" scale="8 8 8" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model3" position="-2 3 -9" scale="7 7 7" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model4" position="3 0 -9" scale="4 3 3" shadow="cast: true"></a-entity>
+  <a-entity gltf-model="#model5" position="1.4 1 -9" scale="1.5 1.5 1.5" shadow="cast: true"></a-entity>
 
-  <a-entity gltf-model="#bottles" position="-2.5 0 9" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#bottles" position="-2.5 1 9" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#bottles" position="-2.5 2 9" scale="1.5 1.5 1.5"   shadow="cast: true"></a-entity>
-
-
-
-  <a-entity gltf-model="#model3" position="-4 1 1" scale="8 8 8"  shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#model3" position="4 0 -9" scale="8 8 8"  shadow="cast: true"></a-entity>
-  <a-entity gltf-model="#model3" position="-2 3 -9" scale="7 7 7"  shadow="cast: true"></a-entity>
-
-  <a-entity gltf-model="#model4" position="3 0 -9" scale="4 3 3"  shadow="cast: true"></a-entity>
-
-
-  <a-entity gltf-model="#model5" position="1.4 1 -9" scale="1.5 1.5 1.5"  shadow="cast: true"></a-entity>
-
+  <!-- Портал -->
   <a-plane
           position="3 0.05 0"
           width="2.3"
@@ -106,34 +120,31 @@
     >
   </a-plane>
 
-  <a-plane rotation="-90 0 0" width="10" height="20" src="#floorTexture" repeat="6 6" shadow="receive: true" ></a-plane> <!-- Пол -->
+  <!-- Пол -->
+  <a-plane rotation="-90 0 0" width="10" height="20" src="#floorTexture" repeat="6 6" shadow="receive: true" ></a-plane>
 
-  <a-plane position="0 5 -10" rotation="0 0 0" width="10" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane> <!-- Задняя стена -->
-
-  <a-plane position="0 5 10" rotation="0 180 0" width="10" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane> <!-- Передняя стена -->
-
-  <a-plane position="5 5 0" rotation="0 -90 0" width="20" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane> <!-- Правая стена -->
-
-  <a-plane position="-5 5 0" rotation="0 90 0" width="20" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane> <!-- Левая стена -->
-
+  <!-- Задняя стена -->
+  <a-plane position="0 5 -10" rotation="0 0 0" width="10" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane>
+  <!-- Передняя стена -->
+  <a-plane position="0 5 10" rotation="0 180 0" width="10" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane>
+  <!-- Правая стена -->
+  <a-plane position="5 5 0" rotation="0 -90 0" width="20" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane>
+  <!-- Левая стена -->
+  <a-plane position="-5 5 0" rotation="0 90 0" width="20" height="10" color="#555" shadow="receive: true" src="#wallTexture"></a-plane>
+  <!-- Потолок -->
   <a-plane position="0 10 0" rotation="-90 0 0" width="10" height="20" color="#555" shadow="receive: true" side="double" src="#wallTexture"></a-plane>
 
-
-
-
-
-
-
+  <!-- Источники света -->
   <a-light type="directional" position="0 5 5" intensity="0.8" shadow="cast: true"></a-light>
   <a-light type="ambient" intensity="0.5"></a-light>
   <a-light type="point" position="3 5 3" intensity="0.5" color="#FFD580"></a-light>
 
-
-
+  <!-- Контейнер для элементов стека -->
   <a-entity id="stack"></a-entity>
 
 </a-scene>
 
+<!-- Подключение логики стека -->
 <script src="js/stack.js"></script>
 </body>
 </html>

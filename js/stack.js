@@ -1,11 +1,13 @@
+// Массив для хранения стековых элементов
 let stack = [];
 let stackEntity;
 
+// Инициализация при загрузке страницы
 window.onload = function() {
     stackEntity = document.querySelector('#stack');
 };
 
-// Скейлы
+// Настройки моделей и их масштабы
 const modelConfigs = [
     { id: '#model2', scale: '0.8 0.8 0.8' },
     { id: '#model3', scale: '6 6 6' },
@@ -15,9 +17,10 @@ const modelConfigs = [
 
 let modelIndex = 0;
 
+// Функция добавления модели в стек
 function pushStack() {
     if (stack.length >= 9) {
-        return;
+        return; // Ограничение по количеству
     }
 
     const index = stack.length;
@@ -31,7 +34,7 @@ function pushStack() {
     model.setAttribute('scale', config.scale);
     model.setAttribute('shadow', 'cast: true; receive: false');
 
-    const randomRotation = Math.random() * 20-5;
+    const randomRotation = Math.random() * 20 - 5;
     model.setAttribute('rotation', `0 ${randomRotation} 0`);
 
     model.setAttribute('animation', `
@@ -47,7 +50,7 @@ function pushStack() {
     modelIndex = (modelIndex + 1) % modelConfigs.length;
 }
 
-
+// Функция удаления модели из стека
 function popStack() {
     if (stack.length === 0) return;
 
@@ -61,7 +64,7 @@ function popStack() {
     const portalX = 3;    // центр портала
     const portalY = 0.05; // высота портала
 
-    // 1️⃣ Сдвиг вбок
+    // Анимация: сдвиг вбок
     model.setAttribute('animation__slide', {
         property: 'position',
         to: `${startX + offsetX} ${startY} ${startZ}`,
@@ -69,7 +72,7 @@ function popStack() {
         easing: 'easeInOutSine'
     });
 
-    // 2️⃣ Перелёт в портал
+    // Анимация: перемещение в портал
     setTimeout(() => {
         model.setAttribute('animation__move', {
             property: 'position',
@@ -79,7 +82,7 @@ function popStack() {
         });
     }, 500);
 
-    // 3️⃣ Удаляем сразу после попадания
+    // Удаление модели после завершения анимации
     setTimeout(() => {
         stackEntity.removeChild(model);
     }, 1100);

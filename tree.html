@@ -1,26 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Устанавливаем кодировку страницы -->
     <meta charset="UTF-8">
-    <title>3D Binary Tree</title>
+    <!-- Заголовок вкладки -->
+    <title>Tree</title>
+
+    <!-- Библиотека A-Frame для 3D-сцены -->
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <!-- Логика построения и анимации дерева (ваш скрипт) -->
     <script defer src="js/tree.js"></script>
+
+    <!-- Глобальные стили проекта -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Тексты реплик Рика, доступные из любого скрипта -->
     <script>
+        /*
+         * Массив фраз, которые ваш ассистент-Рик будет выводить
+         * (по одной за раз, индексируется внешним скриптом).
+         */
         window.rickTextIndex = [
             "Чувак, а почему это дерево выглядит, как будто его рисовал сумасшедший из мультивселенной? Тут всё вверх тормашками, ветки вразнобой — как у меня в голове после вечеринки с Морти! В мультивселенной такое норм, тут может быть что угодно — даже дерево, которое больше на космический лабиринт похоже. Не паникуй, Рик с тобой, сейчас разберёмся, что к чему",
             "Дерево — это такая структура, где каждый узел может иметь потомков. Представь семью Морти: папа, мама, дети — все связаны, но строго по правилам. Здесь порядок иерархии важнее, чем в любых порталах Рика.",
             "Ладно, дружище, давай по-честному. Дерево — это такая штука, где каждый узел — это число, скажем от 1 до 9999. Каждый узел может иметь максимум двух потомков: одного слева и одного справа. Левый потомок — это число меньше текущего узла, правый — больше. Так дерево быстро находит нужное число — словно портал в нужную точку мультивселенной. Запомни: чем глубже ныряешь, тем больше вероятности встретить сумасшедших веток",
             "Здесь у нас всего три ветки — удобно, чтобы не запутаться в лабиринте мультивселенной. Запомни, кнопки  — строго по центру снизу, чтобы не терять время. А если захочешь свалить из этой психушки — выскакивай по кнопке выхода справа вверх. Быстро и без лишних телепортов!"
-
         ];
     </script>
+
+    <!-- Логика появления/скрытия реплик и анимаций ассистента Рика -->
     <script src="js/rick_assistant.js"></script>
+
+    <!-- Встроенные (inline) стили для элементов управления -->
     <style>
         body { margin: 0; overflow: hidden; }
+
+        /* Общий контейнер кнопок (изначально был top:80%, но ниже переопределён) */
         #controls {
             position: fixed;
-            top:80%;
+            top: 80%;
             margin-left: 40px;
             transform: translate(-50%, -50%);
             display: flex;
@@ -32,6 +50,7 @@
             align-items: center;
         }
 
+        /* Поле ввода числа */
         #valueInput {
             width: 200px;
             padding: 10px 15px;
@@ -42,10 +61,10 @@
             transition: border-color 0.3s ease;
         }
 
-        #valueInput:focus {
-            border-color: #0077ff;
-        }
+        /* Синий подсвет при фокусе */
+        #valueInput:focus { border-color: #0077ff; }
 
+        /* Кнопка “Добавить” */
         #insertBtn {
             padding: 12px 25px;
             font-size: 18px;
@@ -57,10 +76,10 @@
             transition: background-color 0.3s ease;
         }
 
-        #insertBtn:hover {
-            background-color: #005fcc;
-        }
+        /* Затемнение при наведении */
+        #insertBtn:hover { background-color: #005fcc; }
 
+        /* Переопределяем позицию #controls: снизу по центру */
         #controls {
             position: fixed;
             bottom: 30px;
@@ -70,10 +89,14 @@
             display: flex;
             gap: 20px;
         }
+
+        /* Универсальные стили для input и button */
         input, button {
             font-size: 20px;
             padding: 10px 20px;
         }
+
+        /* Кнопка возврата на главную страницу */
         .back-button {
             position: absolute;
             top: 10px;
@@ -89,12 +112,17 @@
         }
     </style>
 </head>
+
 <body>
+<!-- ==== Блок ассистента Рика (иконка-меню) ==== -->
 <div class="assistant_wrap">
     <div class="as_img">
+        <!-- Стрелка-иконка, открывает диалог реплик -->
         <img id="menu" src="/assets/models/free-icon-arrow-down-3353104.png" alt="">
     </div>
 </div>
+
+<!-- ==== Текстовая облачка Рика и счётчик реплик ==== -->
 <div class="assistant_wrap_text">
     <div class="img_rick_arr">
         <div class="as_rick_img">
@@ -102,38 +130,45 @@
         </div>
         <div class="rick_arr">
             <img src="assets/models/free-icon-down-arrow-8001417.png" id="menu_text" alt="">
+            <!-- Счётчик текущей реплики -->
             <div class="rick_arr_count">1\1</div>
         </div>
     </div>
+    <!-- Сюда скрипт вставит текст из rickTextIndex -->
     <div class="as_rick_text"></div>
 </div>
+
+<!-- Кнопка возврата к основному меню проекта -->
 <a href="index.html" class="back-button">Назад в меню</a>
 
+<!-- ==== Панель управления деревом ==== -->
 <div id="controls">
+    <!-- Пользователь вводит ключ узла -->
     <input type="number" id="valueInput" placeholder="Введите число">
+    <!-- Триггер вставки узла -->
     <button id="insertBtn">Добавить</button>
 </div>
 
+<!-- ==== 3D-сцена A-Frame ==== -->
 <a-scene>
+    <!-- Заранее загружаемые ассеты (текстуры и модели) -->
     <a-assets>
         <img id="space" src="assets/models/space.jpg">
-        <img id="ligh" src="assets/models/lightning.png">
-        <a-asset-item id="bh" src="assets/models/black_hole.glb"></a-asset-item>
+        <img id="ligh"  src="assets/models/lightning.png">
+        <a-asset-item id="bh"     src="assets/models/black_hole.glb"></a-asset-item>
         <a-asset-item id="planet" src="assets/models/Planet.glb"></a-asset-item>
-        <a-asset-item id="aster" src="assets/models/Asteroid.glb"></a-asset-item>
+        <a-asset-item id="aster"  src="assets/models/Asteroid.glb"></a-asset-item>
     </a-assets>
 
-    <!-- Задник -->
+    <!-- 360° фон сцены -->
     <a-sky src="#space"></a-sky>
 
-    <!-- Освещение -->
+    <!-- Подсветка (ambient + directional) -->
     <a-entity light="type: ambient; color: #ffffff; intensity: 0.8"></a-entity>
     <a-entity light="type: directional; color: #ffffff; intensity: 1" position="5 10 5"></a-entity>
 
-    <!-- Площадка -->
-
-    <!-- Черная дыра
- -->
+    <!-- ========== Декорации космоса ========== -->
+    <!-- Вращающаяся чёрная дыра -->
     <a-entity
             gltf-model="#bh"
             position="-250 10 -150"
@@ -142,6 +177,8 @@
             shadow="cast: true"
             animation="property: rotation; to: 0 415 0; dur: 20000; loop: true; easing: linear">
     </a-entity>
+
+    <!-- Медленно вращающаяся планета -->
     <a-entity
             gltf-model="#planet"
             position="340 10 -150"
@@ -150,21 +187,22 @@
             shadow="cast: true"
             animation="property: rotation; to: 0 360 0; dur: 50000; loop: true; easing: linear">
     </a-entity>
-    <a-entity gltf-model="#aster" position="-270 120 -200" scale="2 2 2" rotation="0 0 0"  shadow="cast: true"></a-entity>
+
+    <!-- Разбросанные астероиды (несколько экземпляров одной модели) -->
+    <a-entity gltf-model="#aster" position="-270 120 -200" scale="2 2 2" rotation="0 0 0"   shadow="cast: true"></a-entity>
     <a-entity gltf-model="#aster" position="-280 140 -200" scale="2 2 2" rotation="0 0 90"  shadow="cast: true"></a-entity>
     <a-entity gltf-model="#aster" position="-230 100 -250" scale="2 2 2" rotation="0 68 0"  shadow="cast: true"></a-entity>
     <a-entity gltf-model="#aster" position="-300 100 -200" scale="2 2 2" rotation="90 0 0"  shadow="cast: true"></a-entity>
 
-    <a-entity gltf-model="#aster" position="300 100 -200" scale="2 2 2" rotation="90 0 0"  shadow="cast: true"></a-entity>
-    <a-entity gltf-model="#aster" position="265 170 -200" scale="2 2 2" rotation="0 90 0"  shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#aster" position="300 100 -200" scale="2 2 2" rotation="90 0 0"   shadow="cast: true"></a-entity>
+    <a-entity gltf-model="#aster" position="265 170 -200" scale="2 2 2" rotation="0 90 0"   shadow="cast: true"></a-entity>
     <a-entity gltf-model="#aster" position="280 130 -200" scale="2 2 2" rotation="90 0 90"  shadow="cast: true"></a-entity>
     <a-entity gltf-model="#aster" position="250 150 -200" scale="2 2 2" rotation="90 0 45"  shadow="cast: true"></a-entity>
 
-
-    <!-- Сюда рисуется дерево -->
+    <!-- Контейнер, в который tree.js добавит узлы дерева -->
     <a-entity id="treeContainer"></a-entity>
 
-    <!-- Камера -->
+    <!-- Камера статично смотрит на дерево с небольшого возвышения -->
     <a-entity camera position="0 25 50" look-controls="enabled: false"></a-entity>
 </a-scene>
 

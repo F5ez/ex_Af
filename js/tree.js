@@ -1,41 +1,46 @@
+// Класс узла бинарного дерева
 class TreeNode {
     constructor(value, level = 0, x = 0, z = 0) {
-        this.value = value;
-        this.left = null;
-        this.right = null;
-        this.level = level;
-        this.x = x;
-        this.z = z;
+        this.value = value;   // Значение узла
+        this.left = null;     // Левый потомок
+        this.right = null;    // Правый потомок
+        this.level = level;   // Уровень (глубина) узла
+        this.x = x;           // Позиция X для отображения
+        this.z = z;           // Позиция Z для отображения
     }
 }
 
+// Класс бинарного дерева
 class BinaryTree {
     constructor() {
-        this.root = null;
-        this.container = document.getElementById('treeContainer');
-        this.maxDepth = 4;
+        this.root = null; // Корень дерева
+        this.container = document.getElementById('treeContainer'); // DOM-контейнер для сцены
+        this.maxDepth = 4; // Максимальная глубина дерева
     }
 
+    // Вставка значения в дерево
     insert(value) {
         if (!this.root) {
-            this.root = new TreeNode(value, 0, 0, 0);
+            this.root = new TreeNode(value, 0, 0, 0); // Корень
             this.createNodeEntity(this.root);
         } else {
-            this.insertNode(this.root, value, 0);
+            this.insertNode(this.root, value, 0); // Рекурсивная вставка
         }
     }
 
+    // Рекурсивная вставка в дерево
     insertNode(node, value, level) {
         if (level >= this.maxDepth - 1) {
             console.warn("Достигнута максимальная глубина дерева");
             return;
         }
 
-        const baseSpread = 45;
-        const minSpread = 5;
-        const spread = Math.max(baseSpread / Math.pow(2, level + 1), minSpread);
+        const baseSpread = 45;  // Базовое смещение по X
+        const minSpread = 5;    // Минимальное смещение
+        const spread = Math.max(baseSpread / Math.pow(2, level + 1), minSpread); // Расчёт ширины
 
         if (value < node.value) {
+            // Вставка в левое поддерево
             if (!node.left) {
                 const offsetX = node.x - spread;
                 const offsetZ = offsetX * 0.2;
@@ -46,6 +51,7 @@ class BinaryTree {
                 this.insertNode(node.left, value, level + 1);
             }
         } else {
+            // Вставка в правое поддерево
             if (!node.right) {
                 const offsetX = node.x + spread;
                 const offsetZ = offsetX * 0.2;
@@ -58,20 +64,22 @@ class BinaryTree {
         }
     }
 
+    // Создание 3D узла (кристалл) и связей
     createNodeEntity(node, parentNode = null) {
-        const verticalStep = 10;
-        const modelYOffset = 15;
+        const verticalStep = 10;      // Расстояние между уровнями
+        const modelYOffset = 15;      // Смещение модели по Y
         const targetY = node.level * verticalStep + modelYOffset;
 
         if (!parentNode) {
-            // Корень — создаём сразу
+            // Если это корень — просто создаем кристалл
             this.spawnCrystal(node.x, targetY, node.z, node.value);
         } else {
-            // Дочерние — с анимацией
+            // Если есть родитель — создаем анимацию связи
             this.animateConnection(parentNode, node);
         }
     }
 
+    // Анимация цилиндра между родителем и потомком
     animateConnection(parent, child) {
         const verticalStep = 10;
         const modelYOffset = 15;
@@ -91,12 +99,13 @@ class BinaryTree {
         entity.setAttribute('position', `${midpoint.x} ${midpoint.y} ${midpoint.z}`);
         entity.setAttribute('scale', `1 0 1`);
 
+        // Установка ориентации цилиндра
         const rotation = this.getRotationBetween(start, end);
         entity.setAttribute('rotation', rotation);
 
         this.container.appendChild(entity);
 
-        // Анимация вытягивания цилиндра
+        // Анимация масштабирования (вытягивания)
         entity.setAttribute('animation', {
             property: 'scale',
             to: `0.6 0.6 0.6`,
@@ -104,6 +113,7 @@ class BinaryTree {
             easing: 'easeOutQuad'
         });
 
+        // После окончания — создаем кристалл
         entity.addEventListener('animationcomplete', () => {
             const verticalStep = 10;
             const modelYOffset = 15;
@@ -113,6 +123,7 @@ class BinaryTree {
         });
     }
 
+    // Создание модели кристалла и текста
     spawnCrystal(x, y, z, value) {
         const model = document.createElement('a-entity');
         model.setAttribute('gltf-model', 'assets/models/crystal.glb');
@@ -120,6 +131,8 @@ class BinaryTree {
         model.setAttribute('rotation', '0 0 0');
         model.setAttribute('position', `${x} ${y} ${z}`);
         this.container.appendChild(model);
+
+        // Анимация вращения кристалла
         model.setAttribute('animation', {
             property: 'rotation',
             to: '0 360 360',
@@ -128,6 +141,7 @@ class BinaryTree {
             loop: true
         });
 
+        // Текст с числом
         const text = document.createElement('a-text');
         text.setAttribute('value', value);
         text.setAttribute('color', '#630202');
@@ -137,6 +151,7 @@ class BinaryTree {
         this.container.appendChild(text);
     }
 
+    // Вычисление поворота цилиндра между двумя точками
     getRotationBetween(start, end) {
         const dx = end.x - start.x;
         const dy = end.y - start.y;
@@ -149,15 +164,17 @@ class BinaryTree {
     }
 }
 
+// Создание экземпляра дерева
 const tree = new BinaryTree();
 
+// Обработка кнопки вставки значения
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('insertBtn').addEventListener('click', () => {
         const valueInput = document.getElementById('valueInput');
         const value = parseInt(valueInput.value);
         if (!isNaN(value)) {
-            tree.insert(value);
-            valueInput.value = '';
+            tree.insert(value); // Вставка значения
+            valueInput.value = ''; // Очистка поля
         }
     });
 });

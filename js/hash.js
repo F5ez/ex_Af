@@ -1,26 +1,33 @@
+// Списки занятых позиций машин для генераторов
 let usedPositions = [];
 let isAnimating = false;
 
+// Класс хеш-таблицы
 class HashTable {
     constructor(size) {
         this.size = size;
-        this.buckets = new Array(size).fill(null).map(() => []);
-        this.container = document.getElementById('hashContainer');
+        this.buckets = new Array(size).fill(null).map(() => []); // Инициализация пустых бакетов
+        this.container = document.getElementById('hashContainer'); // Контейнер для анимации
     }
 
+    // Простая хеш-функция по остатку
     hash(value) {
         return value % this.size;
     }
 
+    // Вставка значения
     insert(value) {
         const index = this.hash(value);
         const bucket = this.buckets[index];
         bucket.push(value);
-        this.createVisualElement(value, index, bucket.length - 1);
+        this.createVisualElement(value, index, bucket.length - 1); // Отрисовка
     }
 
+    // Отображение вставки в 3D
     createVisualElement(value, index, depth) {
         isAnimating = true;
+
+        // Варианты машинок
         const models = [
             { model: '#carModel1', rotation: '0 -90 -90', scale: '1 1 1' },
             { model: '#carModel2', rotation: '0 90 90', scale: '1.5 1.5 1.5' },
@@ -34,15 +41,18 @@ class HashTable {
         car.setAttribute('position', `0 0 0`);
         this.container.appendChild(car);
 
+        // Целевые координаты
         const baseX = -40;
         const preX = baseX + 30;
         const targetY = 20 - (index * 5);
         const targetX = baseX + (depth * 5);
         const targetZ = 0;
 
+        // Когда модель загружена — запускаем анимации
         car.addEventListener('model-loaded', () => {
             car.setAttribute('scale', randomItem.scale);
 
+            // Движение вперёд
             car.setAttribute('animation__move1', {
                 property: 'position',
                 to: `${preX} 0 0`,
@@ -50,6 +60,7 @@ class HashTable {
                 easing: 'easeInOutSine'
             });
 
+            // Подъём вверх
             setTimeout(() => {
                 car.setAttribute('animation__move2', {
                     property: 'position',
@@ -59,6 +70,7 @@ class HashTable {
                 });
             }, 1500);
 
+            // Движение влево к бакету
             setTimeout(() => {
                 car.setAttribute('animation__move3', {
                     property: 'position',
@@ -68,6 +80,7 @@ class HashTable {
                 });
             }, 2000);
 
+            // Удаление машины
             setTimeout(() => {
                 car.parentNode.removeChild(car);
                 isAnimating = false;
@@ -76,10 +89,12 @@ class HashTable {
     }
 }
 
+// Генерация случайных машин с боков
 let usedPositionsX0 = [];
 let usedPositionsX8 = [];
 const maxCars = 8;
 
+// Функция спавна машины с определённой стороны
 function spawnCarFromX(xPos, usedPositions) {
     if (usedPositions.length >= maxCars) return;
 
@@ -106,6 +121,7 @@ function spawnCarFromX(xPos, usedPositions) {
 
     const duration = Math.floor(Math.random() * 2000) + 2000;
 
+    // Падение машины вниз
     car.setAttribute('animation__move', {
         property: 'position',
         to: `${xPos} -30 0`,
@@ -115,23 +131,22 @@ function spawnCarFromX(xPos, usedPositions) {
 
     usedPositions.push(car);
 
+    // Удаление после анимации
     setTimeout(() => {
         usedPositions.splice(usedPositions.indexOf(car), 1);
         car.remove();
     }, duration + 500);
 }
 
-// Спавнеры
+// Периодический спавн машин с двух сторон
 setInterval(() => spawnCarFromX(0, usedPositionsX0), 2500);  // слева
 setInterval(() => spawnCarFromX(8, usedPositionsX8), 3500);  // справа
 
-
-
-
-
+// Инициализация таблицы
 const tableSize = 8;
 const hashTable = new HashTable(tableSize);
 
+// Обработчик кнопки вставки
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('insertBtn').addEventListener('click', () => {
         const valueInput = document.getElementById('valueInput');
@@ -141,7 +156,4 @@ document.addEventListener('DOMContentLoaded', () => {
             valueInput.value = '';
         }
     });
-
-    // Запуск генерации машин
-
 });

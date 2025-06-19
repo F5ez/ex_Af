@@ -1,52 +1,62 @@
+// Класс для управления очередью
 class Queue {
     constructor(maxSize) {
-        this.items = [];
-        this.maxSize = maxSize;
+        this.items = [];           // Хранилище элементов
+        this.maxSize = maxSize;    // Максимальный размер очереди
     }
 
+    // Добавление элемента в очередь
     enqueue(element) {
         if (this.items.length >= this.maxSize) {
-            return;
+            return; // Не добавляем, если достигнут лимит
         }
-        this.items.push(element);
+        this.items.push(element); // Добавление в конец
     }
 
+    // Удаление элемента из очереди
     dequeue() {
         if (this.isEmpty()) {
-            return null;
+            return null; // Если очередь пуста — ничего не делаем
         }
-        return this.items.shift();
+        return this.items.shift(); // Удаляем первый элемент
     }
 
+    // Проверка, пуста ли очередь
     isEmpty() {
         return this.items.length === 0;
     }
 
+    // Получение текущих элементов
     getItems() {
         return this.items;
     }
 }
 
+// Создание экземпляра очереди с максимумом 8 элементов
 const queue = new Queue(8);
-const queueContainer = document.getElementById('queueContainer');
-let counter = 1;
-let isAnimating = false;
 
+// DOM-элемент, в который добавляются овцы
+const queueContainer = document.getElementById('queueContainer');
+
+let counter = 1;          // Счётчик овец
+let isAnimating = false; // Флаг анимации
+
+// Добавление овцы в очередь визуально
 function addSheep(index) {
     const sheep = document.createElement('a-entity');
     sheep.setAttribute('gltf-model', '#sheepModel');
     sheep.setAttribute('scale', '3 3 3');
     sheep.setAttribute('rotation', '0 -90 0');
 
+    // Начальная позиция овцы (случайная X и Z)
     const startX = (Math.random() - 0.5) * 8;
-    const startZ = -50 + (Math.random() - 0.5) ;
+    const startZ = -50 + (Math.random() - 0.5);
 
     sheep.setAttribute('position', `${startX} 1 ${startZ}`);
     queueContainer.appendChild(sheep);
 
-    // Важно! Ждём полной загрузки модели
+    // После загрузки модели задаем анимации движения и покачивания
     sheep.addEventListener('model-loaded', () => {
-
         sheep.setAttribute('animation__move', {
             property: 'position',
             from: `${startX} 1 ${startZ}`,
@@ -66,26 +76,23 @@ function addSheep(index) {
             loop: true,
             to: `0 ${angle} 0`
         });
-
     });
 }
 
-
-
-
+// Обработка добавления овцы по кнопке
 function enqueue() {
     if (isAnimating) return;
 
     if (queue.getItems().length >= queue.maxSize) {
-        return;
+        return; // Превышен лимит очереди
     }
 
-    queue.enqueue("Sheep " + counter);
-    addSheep(queue.getItems().length - 1);
+    queue.enqueue("Sheep " + counter); // Добавляем в очередь
+    addSheep(queue.getItems().length - 1); // Добавляем в сцену
     counter++;
 }
 
-
+// Обработка выпуска овцы из очереди
 function dequeue() {
     if (isAnimating || queue.isEmpty()) return;
 
@@ -95,7 +102,7 @@ function dequeue() {
     const currentPos = firstSheep.getAttribute('position');
     const x = currentPos.x;
 
-    // Этап 1 — прыжок через забор
+    // Анимация поворота/прыжка
     firstSheep.setAttribute('animation__jump', {
         property: 'rotation',
         to: `0 30 0`,
@@ -103,7 +110,7 @@ function dequeue() {
         easing: 'linear'
     });
 
-    // разворот
+    // Анимация выхода вперёд
     setTimeout(() => {
         firstSheep.setAttribute('animation__leave', {
             property: 'position',
@@ -113,16 +120,16 @@ function dequeue() {
         });
     }, 0);
 
-    // Полное удаление после всех анимаций
+    // Удаление из DOM и обновление очереди
     setTimeout(() => {
         queue.dequeue();
         queueContainer.removeChild(firstSheep);
         isAnimating = false;
-        repositionSheep();
+        repositionSheep(); // Обновление позиций оставшихся овец
     }, 500);
 }
 
-
+// Перемещение оставшихся овец на новые позиции
 function repositionSheep() {
     const items = queueContainer.children;
     for (let i = 0; i < items.length; i++) {
@@ -134,6 +141,8 @@ function repositionSheep() {
         });
     }
 }
+
+// Генерация толпы овец вне очереди (фоновая сцена)
 function generateSheepCrowd(count) {
     const crowdContainer = document.getElementById('crowdContainer');
     const rows = 9;
@@ -153,7 +162,7 @@ function generateSheepCrowd(count) {
             sheep.setAttribute('gltf-model', '#sheepModel');
             sheep.setAttribute('scale', '3 3 3');
 
-            // Немного случайности внутри ячейки
+            // Случайное смещение внутри клетки
             const offsetX = (Math.random() - 0.5) * 3;
             const offsetZ = (Math.random() - 0.5) * 2;
 
@@ -162,6 +171,7 @@ function generateSheepCrowd(count) {
 
             sheep.setAttribute('position', `${posX} 1 ${posZ}`);
 
+            // Случайный поворот овцы
             const rotationY = -20 - Math.random() * 50;
             sheep.setAttribute('rotation', `0 ${rotationY} 0`);
 
@@ -171,10 +181,9 @@ function generateSheepCrowd(count) {
     }
 }
 
-
+// Инициализация после загрузки DOM
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('enqueueBtn').addEventListener('click', enqueue);
-    document.getElementById('dequeueBtn').addEventListener('click', dequeue);
-    generateSheepCrowd(45);
-
+    document.getElementById('enqueueBtn').addEventListener('click', enqueue);   // Кнопка добавить
+    document.getElementById('dequeueBtn').addEventListener('click', dequeue);   // Кнопка выпустить
+    generateSheepCrowd(45); // Генерация фоновой толпы
 });
