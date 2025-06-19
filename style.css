@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #111;
+    background: black;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -18,7 +18,16 @@ h1 {
     margin: 20px 0;
     font-size: 4vw;
 }
-
+#rick_png_1,#rick_png_2{
+    top:30%;
+    position: absolute;
+    right: 10%;
+    width: 600px;
+    height: 600px;
+}
+#rick_png_2{
+    right: 50%;
+}
 .menu {
 
     display: flex;
